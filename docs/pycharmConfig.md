@@ -1,4 +1,4 @@
-###1) Set up docker python interpreter for pycharm
+### 1) Set up docker python interpreter for pycharm
 ```
 1.1)  go to 
 	→ settings 
@@ -16,7 +16,7 @@
 	→ Service : wayne-app
 	→ click ok 
 ```
-###2) Configure Django Server
+### 2) Configure Django Server
 ```
 2.1)  go to 
 	→ Run 
@@ -32,7 +32,7 @@
 	→ Working direcotry : /data/www
 ```
 
-###3) If you want to enable the debugger
+### 3) If you want to enable the debugger
 ```
 2.1)  go to 
 	→ Run 
