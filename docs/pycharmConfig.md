@@ -10,7 +10,7 @@
 	→ Docker Compose
 ```
 ```
-1.2)	Change
+1.2) Change
 	→ new Docker Server (if not one all ready exist)
 	→ Configuration file(s) : ./docker-compose.yml
 	→ Service : wayne-app
@@ -23,7 +23,7 @@
 	→ Edit Configuration
 ```
 ```
-2.2)	Change
+2.2) Change
 	→ create a Django Server (if not one all ready exist)
 	→ Host : 0.0.0.0
 	→ Port : 8000
@@ -40,7 +40,7 @@
 	→ Django server you created before
 ```
 ```
-2.2)	Change
+2.2) Change
 	→ check the “No reload” checkbox
 
 ```
