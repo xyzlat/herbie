@@ -1,6 +1,6 @@
 ### 1) Set up docker python interpreter for pycharm
 ```
-1.1)  go to 
+1.1) go to 
 	→ settings 
 	→ Project 
 	→ Project Interpreter
@@ -18,7 +18,7 @@
 ```
 ### 2) Configure Django Server
 ```
-2.1)  go to 
+2.1) go to 
 	→ Run 
 	→ Edit Configuration
 ```
@@ -34,7 +34,7 @@
 
 ### 3) If you want to enable the debugger
 ```
-2.1)  go to 
+2.1) go to 
 	→ Run 
 	→ Edit Configuration
 	→ Django server you created before
