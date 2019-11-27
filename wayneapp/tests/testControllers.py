@@ -14,7 +14,7 @@ class BusinessEntityControllerTest(TestCase):
     def setUpClass(cls):
         super(BusinessEntityControllerTest, cls).setUpClass()
 
-    @patch.object(BusinessEntityManager, 'update_or_create_business_entity', return_value={MagicMock(), True})
+    @patch.object(BusinessEntityManager, 'update_or_create', return_value={MagicMock(), True})
     def test_create_business_entity_should_work(self, mock_manager):
         data = {
             "object": {
