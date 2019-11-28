@@ -33,7 +33,7 @@ class BusinessEntityControllerTest(TestCase):
     def test_create_business_entity_should_fail(self, mock_manager):
         data = {
             "payload": {
-                "version":5,
+                "version": 5,
                 "id": 1,
                 "fname": "chris"
             }

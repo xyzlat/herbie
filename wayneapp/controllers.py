@@ -35,7 +35,6 @@ class BusinessEntityController(APIView):
         return Response({}, status=status.HTTP_200_OK)
 
     def delete(self, request: Request, type: str, key: str) -> Response:
-        #TODO (validation) check if type exist
         try:
             self._entity_manager.delete_by_key(
                 type, key
