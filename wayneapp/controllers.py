@@ -31,8 +31,7 @@ class BusinessEntityController(APIView):
                 type, key, body['payload']['version'], body['payload']
             )
         except Exception as e:
-            self.logger.exception(e)
-            return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return self.handle_exception(e)
         return Response({}, status=status.HTTP_200_OK)
 
     def delete(self, request: Request, type: str, key: str) -> Response:
@@ -42,9 +41,15 @@ class BusinessEntityController(APIView):
                 type, key
             )
         except Exception as e:
-            self.logger.exception(e)
-            return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return self.handle_exception(e)
         return Response({}, status=status.HTTP_200_OK)
+
+    def handle_exception(self, exception):
+        self.logger.exception(exception)
+        exceptionType = exception.__class__.__name__
+        if exceptionType is "AttributeError":
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class SchemaEntityController(APIView):
