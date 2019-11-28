@@ -45,11 +45,9 @@ class BusinessEntityController(APIView):
 
     def handle_exception(self, exception):
         self.logger.exception(exception)
-        exceptionType = exception.__class__.__name__
-        if exceptionType is "AttributeError":
+        if type(exception) is AttributeError:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
         return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 class SchemaEntityController(APIView):
     _schema_loader = None
