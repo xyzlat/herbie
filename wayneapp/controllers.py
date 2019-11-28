@@ -21,7 +21,7 @@ class BusinessEntityController(APIView):
         # TODO validate(body[object],type)
         version = self._get_version(body)
         try:
-            generic_object, created = self._entity_manager.update_or_create(
+            entity_object = self._entity_manager.update_or_create(
                 type, key, version, body['object']
             )
         except Exception:
