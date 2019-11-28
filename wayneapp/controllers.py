@@ -5,6 +5,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.utils import json
+import logging
 from wayneapp.services import BusinessEntityManager, SchemaLoader
 from wayneapp.validations.validator import JsonSchemaValidator
 
@@ -14,6 +15,7 @@ class BusinessEntityController(APIView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._entity_manager = BusinessEntityManager()
+        self.logger = logging.getLogger(__name__)
 
     def post(self, request: Request, type: str, key: str) -> Response:
         body_unicode = request.body.decode('utf-8')
@@ -28,8 +30,8 @@ class BusinessEntityController(APIView):
             self._entity_manager.update_or_create(
                 type, key, body['payload']['version'], body['payload']
             )
-        except Exception:
-            # TODO log exception?
+        except Exception as e:
+            self.logger.exception(e)
             return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response({}, status=status.HTTP_200_OK)
 
@@ -39,8 +41,8 @@ class BusinessEntityController(APIView):
             self._entity_manager.delete_by_key(
                 type, key
             )
-        except Exception:
-            # TODO log exception?
+        except Exception as e:
+            self.logger.exception(e)
             return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response({}, status=status.HTTP_200_OK)
 
