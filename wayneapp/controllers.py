@@ -1,4 +1,3 @@
-import pkgutil
 from _ast import Dict
 
 from rest_framework import status
@@ -33,6 +32,18 @@ class BusinessEntityController(APIView):
             # TODO log exception?
             return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response({}, status=status.HTTP_200_OK)
+
+    def delete(self, request: Request, type: str, key: str) -> Response:
+        #TODO (validation) check if type exist
+        try:
+            self._entity_manager.delete_by_key(
+                type, key
+            )
+        except Exception:
+            # TODO log exception?
+            return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({}, status=status.HTTP_200_OK)
+
 
 class SchemaEntityController(APIView):
     _schema_loader = None
