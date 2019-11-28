@@ -49,8 +49,7 @@ class BusinessEntityControllerTest(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    @patch.object(BusinessEntityManager, 'delete', **{'return_value.raiseError.side_effect': Exception()})
-    def test_delete_business_entity_should_fail(self, mock_manager):
+    def test_delete_business_entity_should_fail(self):
         client = APIClient()
         response = client.delete('/api/test/1', format='none')
 
