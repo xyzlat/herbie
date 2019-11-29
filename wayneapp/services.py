@@ -3,6 +3,7 @@ import pkgutil
 
 from wayneapp.models.models import AbstractBusinessEntity
 
+
 class BusinessEntityManager:
     def get_class(self, entity_name: str):
         models_module = importlib.import_module('wayneapp.models')
@@ -27,7 +28,7 @@ class BusinessEntityManager:
             }
         )
 
-        return business_entity
+        return created
 
     def delete(self, entity_name: str, key: str, version: int) -> None:
         business_entity_class = self.get_class(entity_name)

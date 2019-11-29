@@ -1,5 +1,3 @@
-from _ast import Dict
-
 from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -27,27 +25,41 @@ class BusinessEntityController(APIView):
 
         version = self._get_version(body)
         try:
-            self._entity_manager.update_or_create(
+            created = self._entity_manager.update_or_create(
                 type, key, body['payload']['version'], body['payload']
             )
+            return self.post_response(created)
         except Exception as e:
             return self.handle_exception(e)
-        return Response({}, status=status.HTTP_200_OK)
+
+    def post_response(self, created):
+        if created:
+            return self.custom_response("entity created", status.HTTP_201_CREATED)
+        return self.custom_response("entity updated", status.HTTP_200_OK)
 
     def delete(self, request: Request, type: str, key: str) -> Response:
         try:
             self._entity_manager.delete_by_key(
                 type, key
             )
+            return self.custom_response("entity deleted", status.HTTP_200_OK)
         except Exception as e:
             return self.handle_exception(e)
-        return Response({}, status=status.HTTP_200_OK)
 
-    def handle_exception(self, exception):
+    def handle_exception(self, exception) -> Response:
         self.logger.exception(exception)
         if type(exception) is AttributeError:
-            return Response({}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return self.custom_response(str(exception), status.HTTP_400_BAD_REQUEST)
+        return self.custom_response(str(exception), status.HTTP_400_BAD_REQUEST)
+
+    def custom_response(self, message: str, status_code: status) -> Response:
+        return Response(
+            {
+                "message": message
+            },
+            status=status_code
+        )
+
 
 class SchemaEntityController(APIView):
     _schema_loader = None
