@@ -43,12 +43,8 @@ class JsonSchemaValidator:
 
     def _type_exist(self, type: str) -> bool:
         business_entity_names = self._schema_loader.get_all_business_entity_names()
-        if type not in business_entity_names:
-            return False
-        return True
+        return type in business_entity_names
 
-    def _version_exist(self, version: str, type: str)-> bool:
+    def _version_exist(self, version: str, type: str) -> bool:
         versions = self._schema_loader.get_all_versions(type)
-        if version not in versions:
-            return False
-        return True
+        return version in versions
