@@ -25,9 +25,9 @@ class BusinessEntityController(APIView):
         version = body['version']
         payload = body['payload']
 
-        response_validation = self._validator.validate_schema(payload, type, version)
-        if response_validation:
-            return self._custom_response(response_validation, status.HTTP_400_BAD_REQUEST)
+        error_messages = self._validator.validate_schema(payload, type, version)
+        if error_messages:
+            return self._custom_response(error_messages, status.HTTP_400_BAD_REQUEST)
 
         created = self._entity_manager.update_or_create(
             type, key, version, payload
