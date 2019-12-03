@@ -6,8 +6,6 @@ from rest_framework.utils import json
 import logging
 from wayneapp.services import BusinessEntityManager, SchemaLoader
 from wayneapp.validations.jsonSchemaValidator import JsonSchemaValidator
-from wayneapp.validations.schemaExistValidator import SchemaExistValidator
-from wayneapp.constants import StatusConstants, ResponseConstants
 
 
 class BusinessEntityController(APIView):
@@ -17,8 +15,7 @@ class BusinessEntityController(APIView):
         super().__init__(**kwargs)
         self._entity_manager = BusinessEntityManager()
         self._logger = logging.getLogger(__name__)
-        self._json_validator = JsonSchemaValidator()
-        self._schema_validator = SchemaExistValidator()
+        self._validator = JsonSchemaValidator()
 
     def post(self, request: Request, type: str, key: str) -> Response:
 
@@ -28,12 +25,9 @@ class BusinessEntityController(APIView):
         version = body['version']
         payload = body['payload']
 
-        if not self._schema_validator.schema_exist(type):
-            return self._custom_response("json schema not exist", status.HTTP_400_BAD_REQUEST)
-
-        response_validation = self._json_validator.validate_schema(payload, type, version)
-        if response_validation[ResponseConstants.RESPONSE_KEY][StatusConstants.STATUS] is StatusConstants.STATUS_ERROR:
-            return Response(response_validation, status=status.HTTP_400_BAD_REQUEST)
+        response_validation = self._validator.validate_schema(payload, type, version)
+        if response_validation:
+            return self._custom_response(response_validation, status.HTTP_400_BAD_REQUEST)
 
         created = self._entity_manager.update_or_create(
             type, key, version, payload
