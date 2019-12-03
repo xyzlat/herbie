@@ -24,6 +24,4 @@ class Command(BaseCommand):
         self.stdout.write("Generated classes: {}".format(entity_names_camel_case))
 
     def snake_to_camel(self, word):
-        test = ''.join(x.capitalize() or '_' for x in word.split('_'))
-        print(test)
-        return test
+        return ''.join(x.capitalize() or '_' for x in word.split('_'))
