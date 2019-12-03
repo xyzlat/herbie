@@ -52,12 +52,10 @@ class BusinessEntityManager:
 class SchemaLoader:
 
     def load(self, type: str, version: str) -> str:
-        try:
-            file_content = pkgutil.get_data('wayne_json_schema', type + '/' + type + '_' + version + '.json')
-        except Exception:
-            return None
-        json_string = file_content.decode('utf-8')
-        return json_string
+        file_content = pkgutil.get_data('wayne_json_schema', type + '/' + type + '_' + version + '.json')
+        if file_content is None:
+            return '{}'
+        return file_content.decode('utf-8')
 
     def get_all_business_entity_names(self):
         schema_directory = wayne_json_schema.__path__[0]
