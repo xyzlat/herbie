@@ -13,6 +13,8 @@ class JsonSchemaValidator:
 
     def validate_schema(self, json_data: json, type: str, version: str) -> json:
         schema = self._get_json_schema(type, version)
+        if schema is None:
+            return 'schema file does not exist'
         data_validated = Draft7Validator(schema)
         sorted_errors = sorted(data_validated.iter_errors(json_data), key=lambda e: e.path)
         errors = {}
@@ -33,5 +35,8 @@ class JsonSchemaValidator:
         return errors
 
     def _get_json_schema(self, type, version) -> json:
-        schema = json.loads(self._schema_loader.load(type, version))
+        file = self._schema_loader.load(type, version)
+        if file is None:
+            return None
+        schema = json.loads(file)
         return schema
