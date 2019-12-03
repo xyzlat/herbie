@@ -5,7 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.utils import json
 import logging
 from wayneapp.services import BusinessEntityManager, SchemaLoader
-from wayneapp.validations.validator import JsonSchemaValidator
+from wayneapp.validations.jsonSchemaValidator import JsonSchemaValidator
+from wayneapp.validations.schemaExistValidator import SchemaExistValidator
 from wayneapp.constants import StatusConstants, ResponseConstants
 
 
@@ -16,49 +17,41 @@ class BusinessEntityController(APIView):
         super().__init__(**kwargs)
         self._entity_manager = BusinessEntityManager()
         self._logger = logging.getLogger(__name__)
-        self._validator = JsonSchemaValidator()
+        self._json_validator = JsonSchemaValidator()
+        self._schema_validator = SchemaExistValidator()
 
     def post(self, request: Request, type: str, key: str) -> Response:
 
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
 
-        version = body['payload']['version']
+        version = body['version']
         payload = body['payload']
 
-        response_validation = self._validator.validate_schema(payload, type, version)
+        if not self._schema_validator.schema_exist(type):
+            return self._custom_response("json schema not exist", status.HTTP_400_BAD_REQUEST)
+
+        response_validation = self._json_validator.validate_schema(payload, type, version)
         if response_validation[ResponseConstants.RESPONSE_KEY][StatusConstants.STATUS] is StatusConstants.STATUS_ERROR:
             return Response(response_validation, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            created = self._entity_manager.update_or_create(
-                type, key, version, payload
-            )
-            return self.post_response(created)
-        except Exception as e:
-            return self.handle_exception(e)
+        created = self._entity_manager.update_or_create(
+            type, key, version, payload
+        )
+        return self.post_response(created)
 
     def post_response(self, created):
         if created:
-            return self.custom_response("entity created", status.HTTP_201_CREATED)
-        return self.custom_response("entity updated", status.HTTP_200_OK)
+            return self._custom_response("entity created", status.HTTP_201_CREATED)
+        return self._custom_response("entity updated", status.HTTP_200_OK)
 
     def delete(self, request: Request, type: str, key: str) -> Response:
-        try:
-            self._entity_manager.delete_by_key(
-                type, key
-            )
-            return self.custom_response("entity deleted", status.HTTP_200_OK)
-        except Exception as e:
-            return self.handle_exception(e)
+        self._entity_manager.delete_by_key(
+            type, key
+        )
+        return self._custom_response("entity deleted", status.HTTP_200_OK)
 
-    def handle_exception(self, exception) -> Response:
-        self._logger.exception(exception)
-        if type(exception) is AttributeError:
-            return self.custom_response(str(exception), status.HTTP_400_BAD_REQUEST)
-        return self.custom_response(str(exception), status.HTTP_400_BAD_REQUEST)
-
-    def custom_response(self, message: str, status_code: status) -> Response:
+    def _custom_response(self, message: str, status_code: status) -> Response:
         return Response(
             {
                 "message": message

@@ -6,7 +6,7 @@ from jsonschema import Draft7Validator
 from wayneapp.constants import StatusConstants, ResponseConstants
 
 
-class JsonSchemaValidator():
+class JsonSchemaValidator:
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._schema_loader = SchemaLoader()
