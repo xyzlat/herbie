@@ -27,7 +27,7 @@
 	→ create a Django Server (if not one all ready exist)
 	→ Host : 0.0.0.0
 	→ Port : 8000
-	→ add Path DJANGO_SETTINGS_MODULE=wayne.settings
+	→ add variable DJANGO_SETTINGS_MODULE=wayne.settings
 	→ Python interpreter : choose the remote interpreter that you created before 
 	→ Working direcotry : /data/www
 ```
