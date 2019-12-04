@@ -11,8 +11,6 @@ class JsonSchemaValidator:
         self._schema_loader = SchemaLoader()
 
     def validate_schema(self, json_data: json, business_entity: str, version: str) -> json:
-        if not self.schema_entity_exist(business_entity):
-            return 'schema files does not exist'
         if not self.version_exist(version, business_entity):
             return 'version does not exist'
         schema = self._get_json_schema(business_entity, version)

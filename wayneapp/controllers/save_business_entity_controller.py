@@ -19,16 +19,15 @@ class SaveBusinessEntityController(APIView):
         self._schema_loader = SchemaLoader()
 
     def post(self, request: Request, business_entity: str) -> Response:
-
+        if not self._validator.schema_entity_exist(business_entity):
+            return ControllerUtils.custom_response('schema files does not exist', status.HTTP_400_BAD_REQUEST)
         body = ControllerUtils.request_body(request)
         version = self._get_version(body, business_entity)
         key = body['key']
         payload = body['payload']
-
         error_messages = self._validator.validate_schema(payload, business_entity, version)
         if error_messages:
             return ControllerUtils.custom_response(error_messages, status.HTTP_400_BAD_REQUEST)
-
         created = self._entity_manager.update_or_create(
             business_entity, key, version, payload
         )
