@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 import logging
 from wayneapp.controllers.utils import ControllerUtils
-from wayneapp.services import BusinessEntityManager
+from wayneapp.services import BusinessEntityManager, SchemaLoader
 from wayneapp.validations.jsonSchemaValidator import JsonSchemaValidator
 
 
@@ -16,11 +16,12 @@ class SaveBusinessEntityController(APIView):
         self._entity_manager = BusinessEntityManager()
         self._logger = logging.getLogger(__name__)
         self._validator = JsonSchemaValidator()
+        self._schema_loader = SchemaLoader()
 
     def post(self, request: Request, business_entity: str) -> Response:
 
         body = ControllerUtils.request_body(request)
-        version = self._get_version(body)
+        version = self._get_version(body, business_entity)
         key = body['key']
         payload = body['payload']
 
@@ -31,17 +32,16 @@ class SaveBusinessEntityController(APIView):
         created = self._entity_manager.update_or_create(
             business_entity, key, version, payload
         )
-        return self._create_response(created)
+        return self._create_response(created, version)
 
-    def _get_version(self, body: dict) -> str:
+    def _get_version(self, body: dict, business_entity: str) -> str:
         if 'version' not in body:
-            #TODO get default version
-            return 'v1'
+            return self._schema_loader.get_schema_latest_version(business_entity)
         return body['version']
 
-    def _create_response(self, created):
+    def _create_response(self, created, version):
         if created:
-            return ControllerUtils.custom_response('entity created', status.HTTP_201_CREATED)
-        return ControllerUtils.custom_response('entity updated', status.HTTP_200_OK)
+            return ControllerUtils.custom_response('entity created in version ' + version, status.HTTP_201_CREATED)
+        return ControllerUtils.custom_response('entity updated in version ' + version, status.HTTP_200_OK)
 
 
