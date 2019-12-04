@@ -20,7 +20,8 @@ class DeleteBusinessEntityController(APIView):
 
     def post(self, request: Request, business_entity: str) -> Response:
         body = ControllerUtils.request_body(request)
-        key = body['id']
+        key = body['key']
+
         if 'version' not in body:
             return self._delete_all_versions(business_entity, key)
         return self._delete_by_version(body, business_entity, key)
@@ -33,6 +34,8 @@ class DeleteBusinessEntityController(APIView):
 
     def _delete_by_version(self, body, business_entity, key) -> Response:
         version = body['version']
+        if not self._validator.version_exist(version, business_entity):
+            return ControllerUtils.custom_response('version does not exist', status.HTTP_400_BAD_REQUEST)
         self._entity_manager.delete(business_entity, key, version)
         return ControllerUtils.custom_response('entity deleted from version ' + version, status.HTTP_200_OK)
 

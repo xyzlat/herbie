@@ -13,7 +13,7 @@ class JsonSchemaValidator:
     def validate_schema(self, json_data: json, type: str, version: str) -> json:
         if not self._type_exist(type):
             return 'schema files does not exist'
-        if not self._version_exist(version, type):
+        if not self.version_exist(version, type):
             return 'version does not exist'
         schema = self._get_json_schema(type, version)
         data_validated = Draft7Validator(schema)
@@ -48,7 +48,7 @@ class JsonSchemaValidator:
 
         return type in business_entity_names
 
-    def _version_exist(self, version: str, type: str) -> bool:
+    def version_exist(self, version: str, type: str) -> bool:
         versions = self._schema_loader.get_all_versions(type)
 
         return version in versions
