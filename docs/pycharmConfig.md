@@ -10,7 +10,7 @@
 	→ Docker Compose
 ```
 ```
-1.2) Configure
+1.2) Configuration steps
 	→ new Docker Server (if not one already exist)
 	→ Configuration file(s) : ./docker-compose.yml
 	→ Service : wayne-app
@@ -23,7 +23,7 @@
 	→ Edit Configuration
 ```
 ```
-2.2) Configure
+2.2) Configuration steps
 	→ create a Django Server (if not one already exist)
 	→ Host : 0.0.0.0
 	→ Port : 8000
@@ -34,13 +34,13 @@
 
 ### 3) If you want to enable the debugger
 ```
-2.1) go to 
+3.1) go to 
 	→ Run 
 	→ Edit Configuration
 	→ Django server you created before
 ```
 ```
-2.2) Configure
+3.2) Configuration steps
 	→ check the “No reload” checkbox
 
 ```
