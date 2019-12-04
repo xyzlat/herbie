@@ -21,7 +21,7 @@ class SaveBusinessEntityController(APIView):
 
         body = ControllerUtils.request_body(request)
         version = self._get_version(body)
-        key = body['id']
+        key = body['key']
         payload = body['payload']
 
         error_messages = self._validator.validate_schema(payload, business_entity, version)
