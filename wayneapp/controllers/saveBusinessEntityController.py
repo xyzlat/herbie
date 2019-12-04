@@ -31,7 +31,7 @@ class SaveBusinessEntityController(APIView):
         created = self._entity_manager.update_or_create(
             business_entity, key, version, payload
         )
-        return self._post_response(created)
+        return self._create_response(created)
 
     def _get_version(self, body: dict) -> str:
         if 'version' not in body:
