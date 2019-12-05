@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'wayneapp.apps.WayneappConfig',
-    'django_json_widget'
+    'wayneapp.apps.WayneappConfig'
 ]
 
 MIDDLEWARE = [
