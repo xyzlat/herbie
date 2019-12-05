@@ -22,10 +22,8 @@ class DeleteBusinessEntityController(APIView):
         body = ControllerUtils.extract_body(request)
         key = body['key']
         if not self._validator.schema_entity_exist(business_entity):
-
             return ControllerUtils.custom_response('schema files does not exist', status.HTTP_400_BAD_REQUEST)
         if 'version' not in body:
-
             return self._delete_all_versions(business_entity, key)
 
         return self._delete_by_version(body, business_entity, key)
@@ -40,7 +38,6 @@ class DeleteBusinessEntityController(APIView):
     def _delete_by_version(self, body, business_entity, key) -> Response:
         version = body['version']
         if not self._validator.version_exist(version, business_entity):
-
             return ControllerUtils.custom_response('version does not exist', status.HTTP_400_BAD_REQUEST)
         self._entity_manager.delete(business_entity, key, version)
 
