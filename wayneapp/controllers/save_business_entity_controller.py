@@ -4,8 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 import logging
 from wayneapp.controllers.utils import ControllerUtils
-from wayneapp.services import BusinessEntityManager, SchemaLoader
-from wayneapp.validations.jsonSchemaValidator import JsonSchemaValidator
+from wayneapp.services import BusinessEntityManager, SchemaLoader, JsonSchemaValidator
 
 
 class SaveBusinessEntityController(APIView):
