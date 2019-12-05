@@ -16,7 +16,8 @@ class ControllerUtils:
         )
     
     @staticmethod
-    def request_body(request: Request) -> dict:
+    def extract_body(request: Request) -> dict:
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
+
         return body

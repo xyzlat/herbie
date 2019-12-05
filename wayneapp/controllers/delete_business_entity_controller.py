@@ -19,25 +19,31 @@ class DeleteBusinessEntityController(APIView):
         self._validator = JsonSchemaValidator()
 
     def post(self, request: Request, business_entity: str) -> Response:
-        body = ControllerUtils.request_body(request)
+        body = ControllerUtils.extract_body(request)
         key = body['key']
         if not self._validator.schema_entity_exist(business_entity):
+
             return ControllerUtils.custom_response('schema files does not exist', status.HTTP_400_BAD_REQUEST)
         if 'version' not in body:
+
             return self._delete_all_versions(business_entity, key)
+
         return self._delete_by_version(body, business_entity, key)
 
     def _delete_all_versions(self, business_entity, key) -> Response:
         self._entity_manager.delete_by_key(
             business_entity, key
         )
+
         return ControllerUtils.custom_response('entity deleted from all versions', status.HTTP_200_OK)
 
     def _delete_by_version(self, body, business_entity, key) -> Response:
         version = body['version']
         if not self._validator.version_exist(version, business_entity):
+
             return ControllerUtils.custom_response('version does not exist', status.HTTP_400_BAD_REQUEST)
         self._entity_manager.delete(business_entity, key, version)
+
         return ControllerUtils.custom_response('entity deleted from version ' + version, status.HTTP_200_OK)
 
 
