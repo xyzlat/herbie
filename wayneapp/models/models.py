@@ -14,3 +14,14 @@ class AbstractBusinessEntity(TimeStampedModel):
     class Meta:
         abstract = True
         unique_together = ('key', 'version')
+
+
+class JsonSchema(AbstractBusinessEntity):
+    key = models.TextField(null=False)
+    version = models.TextField(null=False, default='v1')
+    data = JSONField(null=False)
+
+
+    class Meta:
+        managed: False
+
