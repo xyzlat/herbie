@@ -1,6 +1,7 @@
 {% extends 'admin/base_site.html' %}
 
 {% load static %}
+{% load schema_list %}
 
 {% block branding %}
     <div class="head">
@@ -15,37 +16,27 @@
 {% block content %}
     {% block schema_list %}
     <div class=”results”>
-        <table>
-            {% for schema in schema_list %} {{ schema_list.schema }}
-                {% for data in schema.entity %}
-                    {% for json in data %}
+    {% for schema in schema_list %}
+        <div class="text">
+            <h1>{{ schema }}</h1>
+        </div>
 
-                        <tr>
-                            <th scope="row">testTH</th>
-                            <td>{{ data }}</td>
-
-                        </tr>
-                    {% endfor %}
+        <table  class="result_list">
+            {% with json_data=schema_list|getattr:schema %}
+                {% for version in json_data %}
+                        <thead>
+                            <tr>
+                                <th> <a href="/admin/schema_list/{{ schema }}/{{ version }}"> {{ schema }}  {{ version }} </a></th>
+                            </tr>
+                        </thead>
                 {% endfor %}
-            {% endfor %}
+            {% endwith %}
         </table>
+    {% endfor %}
     </div>
 
 
-    <table>
-        <tr>
-            {% for schema in schema_list %}
-                <th>{{ schema }}</th>
 
-            {% endfor %}
-        </tr>
-        {% for schema in schema_list %}
-        <tr>
-            <td>{{ schema_list.schema }}</td>
-
-        </tr>
-        {% endfor %}
-    </table>
 
     {% endblock %}
 {% endblock %}

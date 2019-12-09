@@ -1,0 +1,18 @@
+{% extends 'admin/base_site.html' %}
+
+{% load static %}
+{% load schema_list %}
+
+{% block branding %}
+    <div class="head">
+        <h1 id="name">Admin Dashboard</h1>
+    </div>
+{% endblock %}
+
+{% block nav-global %}
+    <img class="brand_img" src="{% static 'images/ic_launcher.png'%}" width="50" height="50" alt="logo">
+{% endblock %}
+
+{% block content %}
+    {{ schema_json }}
+{% endblock %}
