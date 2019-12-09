@@ -15,11 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from wayneapp.controllers import SchemaViewController
 from wayneapp.controllers \
     import schema_entity_controller, save_business_entity_controller, delete_business_entity_controller
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('admin/schema_list/', admin.site.admin_view(SchemaViewController.as_view()),
+             {'business_entity': '', 'version': ''}),
+    path('admin/schema_list/<str:business_entity>/<str:version>',
+             admin.site.admin_view(SchemaViewController.as_view())),
     path('api/<str:business_entity>/save', save_business_entity_controller.SaveBusinessEntityController().as_view()),
     path('api/<str:business_entity>/delete',
          delete_business_entity_controller.DeleteBusinessEntityController().as_view()),

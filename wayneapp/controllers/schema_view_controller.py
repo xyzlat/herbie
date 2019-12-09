@@ -1,5 +1,8 @@
+import json
 from rest_framework.request import Request
 from rest_framework.response import Response
+
+from django.utils.safestring import mark_safe
 
 from rest_framework.views import APIView
 from django.http import HttpResponse
@@ -38,6 +41,12 @@ class SchemaViewController(APIView):
         return context
 
     def _get_schema_details(self, business_entity: str, version: str) -> Response:
-        context = {'schema_json': self._schema_loader.load(business_entity, version)}
+
+        json_data = self._schema_loader.load(business_entity, version)
+        context = {
+            'schema_json': mark_safe('<pre id="json-renderer" class="json-document">' + json_data + '</pre>'),
+            'business_entity': business_entity,
+            'version': version
+        }
 
         return context

@@ -3,22 +3,12 @@
 {% load static %}
 {% load schema_list %}
 
-{% block branding %}
-    <div class="head">
-        <h1 id="name">Admin Dashboard</h1>
-    </div>
-{% endblock %}
-
-{% block nav-global %}
-    <img class="brand_img" src="{% static 'images/ic_launcher.png'%}" width="50" height="50" alt="logo">
-{% endblock %}
-
 {% block content %}
     {% block schema_list %}
     <div class=”results”>
     {% for schema in schema_list %}
         <div class="text">
-            <h1>{{ schema }}</h1>
+            <h1>Json-schemas for {{ schema }}</h1>
         </div>
 
         <table  class="result_list">
@@ -32,11 +22,8 @@
                 {% endfor %}
             {% endwith %}
         </table>
+        <br> <br>
     {% endfor %}
     </div>
-
-
-
-
     {% endblock %}
 {% endblock %}

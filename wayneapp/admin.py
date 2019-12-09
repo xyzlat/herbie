@@ -5,6 +5,7 @@ from django.utils.safestring import mark_safe
 from wayneapp.models import AbstractBusinessEntity
 from wayne import settings
 
+
 admin.site.disable_action('delete_selected')
 
 
@@ -35,4 +36,32 @@ class ReadOnlyAdmin(admin.ModelAdmin):
         }
 
 
+class MyAdminSite(admin.AdminSite):
+    def get_app_list(self, request):
+        app_list = super().get_app_list(request)
+        app_list += [
+            {
+                "name": "List Json Schema",
+                "app_label": "my_test_app",
+                "models": [
+                    {
+                        "name": "Json Schema",
+                        "object_name": "JsonSchema",
+                        "admin_url": 'schema_list',
+                        "view_only": True,
+                    }
+                ],
+            }
+        ]
+        return app_list
+
+
+mysite = MyAdminSite()
+admin.site = mysite
+
+
 admin.site.register([cls for cls in AbstractBusinessEntity.__subclasses__()], ReadOnlyAdmin)
+
+
+
+
