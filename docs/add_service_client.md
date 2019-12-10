@@ -16,7 +16,17 @@ Each group represent a business entity channel/topic.
 You can define which business entities your service is authorized 
 to publish data
 ```
+
 ##### 5) Create a token for your new user-service
 ```
 Go to Tokens -> add Token -> choose your new user-service -> save
+```
+
+##### 5) How to add the token in the requests
+```
+add it in the headers of the request 
+Authorization: Token "token-value"
+Example:
+Authorization: Token 9054f7aa9305e012b3c2300408c3dfdf390fcddf
+
 ```
