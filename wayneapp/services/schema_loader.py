@@ -58,3 +58,7 @@ class SchemaLoader:
         version = 'v' + str(version)
 
         return version
+
+    @staticmethod
+    def snake_to_camel(word):
+        return ''.join(x.capitalize() or '_' for x in word.split('_'))
