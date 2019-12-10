@@ -1,4 +1,5 @@
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -17,8 +18,11 @@ class DeleteBusinessEntityController(APIView):
         self._entity_manager = BusinessEntityManager()
         self._logger = logging.getLogger(__name__)
         self._validator = JsonSchemaValidator()
+        self._permission_classes = (IsAuthenticated,)
 
     def post(self, request: Request, business_entity: str) -> Response:
+        if not ControllerUtils.user_is_authorized(business_entity, request):
+            return ControllerUtils.unauthorized_response()
         body = ControllerUtils.extract_body(request)
         key = body[Constants.KEY]
         if not self._validator.business_entity_exist(business_entity):
