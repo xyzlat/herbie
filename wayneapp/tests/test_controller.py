@@ -7,10 +7,10 @@ from rest_framework.test import APIClient
 from wayneapp.services import BusinessEntityManager
 
 
-class BusinessEntityControllerTest(TestCase):
+class TestBusinessEntityController(TestCase):
     @classmethod
     def setUpClass(cls):
-        super(BusinessEntityControllerTest, cls).setUpClass()
+        super(TestBusinessEntityController, cls).setUpClass()
 
     @patch.object(BusinessEntityManager, 'update_or_create', return_value={MagicMock(), True})
     def test_create_business_entity_should_work(self, mock_manager):
