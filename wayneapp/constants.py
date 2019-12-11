@@ -26,5 +26,8 @@ class ControllerConstants:
     PAYLOAD = 'payload'
     VERSION = 'version'
     UNAUTHORIZED = 'unauthorized'
-
-
+    DELETE = 'delete'
+    ADD = 'add'
+    CHANGE = 'change'
+    VIEW = 'view'
+    UNDERSCORE = '_'

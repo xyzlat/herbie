@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Permission
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
@@ -21,7 +22,7 @@ class DeleteBusinessEntityController(APIView):
         self._permission_classes = (IsAuthenticated,)
 
     def post(self, request: Request, business_entity: str) -> Response:
-        if not ControllerUtils.user_is_authorized(business_entity, request):
+        if not self.user_is_authorized(business_entity, request):
             return ControllerUtils.unauthorized_response()
         body = ControllerUtils.extract_body(request)
         key = body[Constants.KEY]
@@ -60,5 +61,9 @@ class DeleteBusinessEntityController(APIView):
             status.HTTP_200_OK
         )
 
+    def user_is_authorized(self, business_entity: str, request: Request) -> bool:
+        permissions = Permission.objects.filter(user=request.user).all()
+        permissions_code_names = [permission.codename for permission in permissions]
+        delete_permission = ControllerUtils.delete_permission_string(business_entity)
 
-
+        return delete_permission in permissions_code_names

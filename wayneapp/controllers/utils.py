@@ -3,7 +3,6 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.utils import json
 from wayneapp.constants import ControllerConstants
-from wayneapp.services import SchemaLoader
 
 
 class ControllerUtils:
@@ -39,11 +38,23 @@ class ControllerUtils:
         return body
 
     @staticmethod
-    def user_is_authorized(business_entity: str, request: Request) -> bool:
-        business_entity_camel_case = SchemaLoader.snake_to_camel(business_entity)
-        user = request.user
-        groups = list(user.groups.all())
-        groups_name = [group.name for group in groups]
-        if business_entity_camel_case in groups_name:
-            return True
-        return False
+    def add_permission_string(business_entity: str) -> str:
+        return ControllerConstants.ADD +\
+               ControllerConstants.UNDERSCORE +\
+               ControllerUtils.remove_underscores(business_entity)
+
+    @staticmethod
+    def change_permission_string(business_entity: str) -> str:
+        return ControllerConstants.CHANGE + \
+               ControllerConstants.UNDERSCORE + \
+               ControllerUtils.remove_underscores(business_entity)
+
+    @staticmethod
+    def delete_permission_string(business_entity: str) -> str:
+        return ControllerConstants.DELETE + \
+               ControllerConstants.UNDERSCORE + \
+               ControllerUtils.remove_underscores(business_entity)
+
+    @staticmethod
+    def remove_underscores(string: str) -> str:
+        return string.replace('_', '')

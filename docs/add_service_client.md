@@ -10,11 +10,18 @@ http://localhost:8000/admin
 
 ##### 4) Go to Users in the admin panel and choose your new user-service
 
-##### 5) Go to the permissions section and add groups
+##### 5) Go to the (permissions section -> User permissions) and add Permissions
 ```
-Each group represent a business entity channel/topic.
-You can define which business entities your service is authorized 
-to publish data
+Each business entity represent a channel/topic and has 
+4 different permissions (add, change, delete, view)
+
+Example for Customer business entity:
+wayneapp | customer | Can add customer
+wayneapp | customer | Can change customer
+wayneapp | customer | Can delete customer
+wayneapp | customer | Can view customer
+
+For save and update you need to have both add and change permissions 
 ```
 
 ##### 5) Create a token for your new user-service
@@ -28,5 +35,4 @@ add it in the headers of the request
 Authorization: Token "token-value"
 Example:
 Authorization: Token 9054f7aa9305e012b3c2300408c3dfdf390fcddf
-
 ```
