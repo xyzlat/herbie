@@ -21,7 +21,7 @@ wayneapp | customer | Can change customer
 wayneapp | customer | Can delete customer
 wayneapp | customer | Can view customer
 
-For save and update you need to have both add and change permissions 
+For save requests (api/<business_entity>/save) you need to have both add and change permissions 
 ```
 
 ##### 5) Create a token for your new user-service
