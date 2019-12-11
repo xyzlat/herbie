@@ -6,6 +6,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN mkdir -p /data/www/
 
+# For now all dependencies in the requirements.txt are public and we don't need an ssh-key.
 #RUN mkdir /root/.ssh/
 #RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
 #RUN chmod 600 /root/.ssh/id_rsa
