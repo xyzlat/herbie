@@ -66,4 +66,5 @@ class SaveBusinessEntityController(APIView):
         permissions_code_names = [permission.codename for permission in permissions]
         add_permission = ControllerUtils.add_permission_string(business_entity)
         change_permission = ControllerUtils.change_permission_string(business_entity)
+
         return (add_permission in permissions_code_names) and (change_permission in permissions_code_names)
