@@ -34,8 +34,8 @@ class BusinessEntityManager:
         return created
 
     def find_all(self, entity_name: str) -> QuerySet:
-        business_entity_class = self.get_class(entity_name)
-        return business_entity_class.objects.all().order_by("key")
+        business_entity_class = BusinessEntityUtils.get_entity_class(entity_name)
+        return business_entity_class.objects.all()
 
     def delete(self, entity_name: str, key: str, version: str) -> int:
         business_entity_class = BusinessEntityUtils.get_entity_class(entity_name)

@@ -35,3 +35,4 @@ class ControllerConstants:
 class CommandsConstants:
     FIRST_PAGE = 1
     BUSINESS_ENTITY = 'business_entity'
+    CHUNK_SIZE = 'chunk_size'
