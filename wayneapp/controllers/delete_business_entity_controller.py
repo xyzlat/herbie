@@ -22,7 +22,7 @@ class DeleteBusinessEntityController(APIView):
         self._permission_classes = (IsAuthenticated,)
 
     def post(self, request: Request, business_entity: str) -> Response:
-        if not self.user_is_authorized(business_entity, request):
+        if not self.has_delete_permission(business_entity, request):
             return ControllerUtils.unauthorized_response()
         body = ControllerUtils.extract_body(request)
         key = body[Constants.KEY]
@@ -61,9 +61,10 @@ class DeleteBusinessEntityController(APIView):
             status.HTTP_200_OK
         )
 
-    def user_is_authorized(self, business_entity: str, request: Request) -> bool:
-        permissions = Permission.objects.filter(user=request.user).all()
-        permissions_code_names = [permission.codename for permission in permissions]
-        delete_permission = ControllerUtils.delete_permission_string(business_entity)
+    def has_delete_permission(self, business_entity: str, request: Request) -> bool:
+        delete_permission = ControllerUtils.get_permission_string(Constants.DELETE, business_entity)
 
-        return delete_permission in permissions_code_names
+        return Permission.objects\
+            .filter(user=request.user)\
+            .filter(codename=delete_permission)\
+            .exists()

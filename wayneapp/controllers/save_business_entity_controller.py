@@ -8,6 +8,7 @@ from wayneapp.constants import ControllerConstants as Constants
 from wayneapp.controllers.utils import ControllerUtils
 from wayneapp.services import BusinessEntityManager, SchemaLoader, JsonSchemaValidator
 from rest_framework.permissions import IsAuthenticated
+from django.db.models import Q
 
 
 class SaveBusinessEntityController(APIView):
@@ -22,7 +23,7 @@ class SaveBusinessEntityController(APIView):
         self._permission_classes = (IsAuthenticated,)
 
     def post(self, request: Request, business_entity: str) -> Response:
-        if not self.user_is_authorized(business_entity, request):
+        if not self.has_save_permission(business_entity, request):
             return ControllerUtils.unauthorized_response()
         if not self._validator.business_entity_exist(business_entity):
             return ControllerUtils.business_entity_not_exist_response(business_entity)
@@ -61,10 +62,10 @@ class SaveBusinessEntityController(APIView):
             status.HTTP_200_OK
         )
 
-    def user_is_authorized(self, business_entity: str, request: Request) -> bool:
+    def has_save_permission(self, business_entity: str, request: Request) -> bool:
+        add_permission = ControllerUtils.get_permission_string(Constants.ADD, business_entity)
+        change_permission = ControllerUtils.get_permission_string(Constants.CHANGE, business_entity)
         permissions = Permission.objects.filter(user=request.user).all()
         permissions_code_names = [permission.codename for permission in permissions]
-        add_permission = ControllerUtils.add_permission_string(business_entity)
-        change_permission = ControllerUtils.change_permission_string(business_entity)
 
         return (add_permission in permissions_code_names) and (change_permission in permissions_code_names)

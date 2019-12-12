@@ -1,8 +1,8 @@
-##### 1) Create super user
+##### 1) Create a super user
 ```
 python manage.py createsuperuser --username "username" --email "email-address"
 ```
-##### 2) Log in the admin panel as super user  
+##### 2) Log in to the admin panel as super user  
 ```
 http://localhost:8000/admin
 ```

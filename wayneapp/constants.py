@@ -30,4 +30,3 @@ class ControllerConstants:
     ADD = 'add'
     CHANGE = 'change'
     VIEW = 'view'
-    UNDERSCORE = '_'

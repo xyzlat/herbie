@@ -38,22 +38,8 @@ class ControllerUtils:
         return body
 
     @staticmethod
-    def add_permission_string(business_entity: str) -> str:
-        return ControllerConstants.ADD +\
-               ControllerConstants.UNDERSCORE +\
-               ControllerUtils.remove_underscores(business_entity)
-
-    @staticmethod
-    def change_permission_string(business_entity: str) -> str:
-        return ControllerConstants.CHANGE + \
-               ControllerConstants.UNDERSCORE + \
-               ControllerUtils.remove_underscores(business_entity)
-
-    @staticmethod
-    def delete_permission_string(business_entity: str) -> str:
-        return ControllerConstants.DELETE + \
-               ControllerConstants.UNDERSCORE + \
-               ControllerUtils.remove_underscores(business_entity)
+    def get_permission_string(action: str, business_entity: str) -> str:
+        return action + '_' + ControllerUtils.remove_underscores(business_entity)
 
     @staticmethod
     def remove_underscores(string: str) -> str:
