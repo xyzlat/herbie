@@ -13,7 +13,7 @@ class TestSchemaLoader(TestCase):
         self._schema_loader = SchemaLoader()
         self._business_entity = 'test_entity'
         self._version_1 = 'v1'
-        self._version_2 = 'v2'
+        self._version_latest = 'v2'
 
     @classmethod
     def setUpClass(cls):
@@ -43,9 +43,9 @@ class TestSchemaLoader(TestCase):
     def test_get_all_versions(self):
         schema_all_versions = self._schema_loader.get_all_versions(self._business_entity)
 
-        self.assertEqual({self._version_1, self._version_2}, schema_all_versions)
+        self.assertEqual({self._version_1, self._version_latest}, schema_all_versions)
 
     def test_get_schema_latest_version(self):
         schema_latest_version = self._schema_loader.get_schema_latest_version(self._business_entity)
 
-        self.assertEqual(self._version_2, schema_latest_version)
+        self.assertEqual(self._version_latest, schema_latest_version)
