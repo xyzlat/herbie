@@ -10,7 +10,7 @@ class AbstractBusinessEntity(TimeStampedModel):
     """
     key = models.TextField(null=False)
     version = models.TextField(null=False, default='v1')
-    publisher = models.ForeignKey(User, null=False, on_delete=models.PROTECT, default=0)
+    publisher = models.ForeignKey(User, null=False, on_delete=models.PROTECT)
     data = JSONField(null=False)
 
     class Meta:
