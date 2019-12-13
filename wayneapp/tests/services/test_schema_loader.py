@@ -9,16 +9,14 @@ from wayneapp.services import SchemaLoader
 
 class TestSchemaLoader(TestCase):
 
-    def setUp(self):
-        self._schema_loader = SchemaLoader()
-        self._business_entity = 'test_entity'
-        self._version_1 = 'v1'
-        self._version_latest = 'v2'
-
     @classmethod
     def setUpClass(cls):
         super(TestSchemaLoader, cls).setUpClass()
         settings.SCHEMA_PACKAGE_NAME = 'wayneapp.tests.test_schema'
+        cls._schema_loader = SchemaLoader()
+        cls._business_entity = 'test_entity'
+        cls._version_1 = 'v1'
+        cls._version_latest = 'v2'
 
     @patch.object(pkgutil, 'get_data', return_value=None)
     def test_load_empty_schema(self, mock_pkgutil):
