@@ -7,11 +7,11 @@ from wayneapp.controllers import DeleteBusinessEntityController
 from wayneapp.services import BusinessEntityManager, settings
 
 
-class TestBusinessEntityController(TestCase):
+class TestDeleteBusinessEntityController(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestBusinessEntityController, cls).setUpClass()
+        super(TestDeleteBusinessEntityController, cls).setUpClass()
         settings.SCHEMA_PACKAGE_NAME = 'wayneapp.tests.test_schema'
 
     @patch.object(BusinessEntityManager, 'delete', return_value=1)
