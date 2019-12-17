@@ -26,8 +26,7 @@ class PermissionManager:
     def get_view_permission(self, business_entity: str) -> Permission:
         view_permission = self.get_permission_string(ControllerConstants.VIEW, business_entity)
 
-        return Permission.objects\
-            .get(codename=view_permission)
+        return Permission.objects.get(codename=view_permission)
 
     def get_permission_string(self, action: str, business_entity: str) -> str:
         return action + '_' + self._remove_underscores(business_entity)
