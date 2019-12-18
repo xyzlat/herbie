@@ -14,6 +14,14 @@ class ReadOnlyAdmin(admin.ModelAdmin):
 
     _entity_manager = BusinessEntityManager()
 
+    def has_view_permission(self, request, obj=None):
+        if super().has_view_permission(request, obj):
+            return True
+
+        return request.user.groups\
+            .filter(name=['business_entities_view_permission'])\
+            .exists()
+
     def has_add_permission(self, request, obj=None):
         return False
 
