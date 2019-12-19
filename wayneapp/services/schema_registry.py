@@ -6,9 +6,9 @@ from django.conf import settings
 import importlib
 
 
-class SchemaLoader:
+class SchemaRegistry:
     def __init__(self):
-        self._schema_package = importlib.import_module(settings.SCHEMA_PACKAGE_NAME)
+        self._schema_package = importlib.import_module(settings.SCHEMA_REGISTRY_PACKAGE)
 
     def load(self, business_entity: str, version: str) -> str:
         file_content = pkgutil.get_data(settings.SCHEMA_PACKAGE_NAME,

@@ -27,12 +27,13 @@ admin.site.index_title = 'Dashboard'
 
 
 urlpatterns = [
+    path('', admin.site.urls),
     path('admin/', admin.site.urls),
     path('api/<str:business_entity>/save', save_business_entity_controller.SaveBusinessEntityController().as_view()),
     path('api/<str:business_entity>/delete',
          delete_business_entity_controller.DeleteBusinessEntityController().as_view()),
-    path('api/schema/<str:business_entity>/<str:version>', schema_entity_controller.SchemaEntityController().as_view()),
-    path('api/schema/<str:business_entity>/', schema_entity_controller.SchemaEntityController().as_view(),
+    path('api/schema-registry/<str:business_entity>/<str:version>', schema_entity_controller.SchemaRegistryController().as_view()),
+    path('api/schema-registry/<str:business_entity>/', schema_entity_controller.SchemaRegistryController().as_view(),
          {'version': ''}),
     path('oauth/', include('social_django.urls', namespace='social')),
 ]

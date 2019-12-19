@@ -5,16 +5,16 @@ from wayneapp.services import settings
 import json
 import pkgutil
 
-from wayneapp.services import SchemaLoader
+from wayneapp.services import SchemaRegistry
 
 
-class TestSchemaLoader(TestCase):
+class TestSchemaRegistry(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestSchemaLoader, cls).setUpClass()
-        settings.SCHEMA_PACKAGE_NAME = 'wayneapp.tests.test_schema'
-        cls._schema_loader = SchemaLoader()
+        super(TestSchemaRegistry, cls).setUpClass()
+        settings.SCHEMA_REGISTRY_PACKAGE = 'wayneapp.tests.test_schema'
+        cls._schema_loader = SchemaRegistry()
         cls._business_entity = 'test_entity'
         cls._version_1 = 'v1'
         cls._version_latest = 'v2'
