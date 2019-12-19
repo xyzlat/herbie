@@ -12,7 +12,7 @@ def create_group_for_view_permission(sender, **kwargs):
         codename='view_business_entities',
         content_type=content_type,
     )
-    group, created = Group.objects.get_or_create(name='business_entities_view_permission')
+    group, created = Group.objects.get_or_create(name='business_entities_view_group')
     group.permissions.add(permission)
 
 
