@@ -19,7 +19,7 @@ class ReadOnlyAdmin(admin.ModelAdmin):
             return True
 
         return request.user.groups\
-            .filter(name='business_entities_view_permission')\
+            .filter(name='business_entities_view_group')\
             .exists()
 
     def has_add_permission(self, request, obj=None):
