@@ -34,7 +34,7 @@ class TestSchemaRegistry(TestCase):
 
     def test_load_json_success(self):
         get_json_schema = self._schema_loader.load(self._business_entity, self._version_1)
-        test_json_schema = pkgutil.get_data(settings.SCHEMA_PACKAGE_NAME, self._business_entity + '/' +
+        test_json_schema = pkgutil.get_data(settings.SCHEMA_REGISTRY_PACKAGE, self._business_entity + '/' +
                                             self._business_entity + '_' + self._version_1 + '.json')
 
         self.assertEqual(test_json_schema.decode('utf-8'), get_json_schema)
