@@ -1,8 +1,5 @@
 from django.contrib.auth.models import User, Group
-
 from wayneapp.constants import GroupConstants
-from wayneapp.services import SchemaLoader
-from wayneapp.services.permission_manager import PermissionManager
 
 
 def process_roles(details, user, **kwargs):
