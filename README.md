@@ -84,6 +84,7 @@ https://github.com/project-a/wayne-json-schema
 - In requirements.txt file append your schemas repository url in order for pip to collect your package.
 (e.g.  git+https://github.com/project-a/wayne-json-schema.git)
 - In setting.py file of Wayne project assign your package name to the 'SCHEMA_PACKAGE_NAME' variable
+
 (Keep in mind that in case of a private repository, it also needs to provide a private ssh key to the docker container and pull the project with ssh in order for Wayne
 to have access on the repository. For the developing process you can directly provide you personal private ssh key but for production you need to create a new one
 for Wayne)
