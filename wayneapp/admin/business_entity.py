@@ -19,9 +19,7 @@ class ReadOnlyAdmin(admin.ModelAdmin):
         if super().has_view_permission(request, obj):
             return True
 
-        return request.user.groups\
-            .filter(name=GroupConstants.BUSINESS_ENTITIES_VIEW_GROUP)\
-            .exists()
+        return request.user.has_perm('wayneapp.view_business_entities')
 
     def has_add_permission(self, request, obj=None):
         return False
