@@ -44,12 +44,12 @@ _Note:_ Please make sure that port 8000 is not blocked by another service on you
 
 # How to setup wayne for your project?
 ### 1 Clone/Fork
-You can Fork or Clone the project. We suggest you to Fork the project in order to have your separate repository 
-for further developing of Wayne and also to make some custom modifications(e.g. change the messaging provider), 
-but also to merge easier any new changes from the official repository.
+In order to setup a Wayne-Project from scratch you can either fork or clone the repository. We suggest you to fork the project, 
+because like that you have a separate repository so you can make custom modifications (e.g. change the messaging provider) 
+and at the same time receive changes from the official repository in an easy manner
 
 ### 2 Add Business Entities Schemas Package
-Next step is to define your schemas for your business entities and integrate them with Wayne. There are 2 choices, or having a different
+Next step is to define your schemas for your business entities and integrate them with Wayne. There are 2 choices, having a different
 repository for your schemas and load them to wayne as a python package with pip, or adding them directly to the Wayne as a python package
 
 ##### Business Entities Schemas package folders structure
