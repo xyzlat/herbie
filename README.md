@@ -13,20 +13,17 @@ B. No common **platform-wide definition** of a data object or business entity.
 
 Wayne approaches those problems with the idea of a _schema registry combined with a central data store_ for business 
 entities. 
-It is built on top of Django and comes with a simple API to create business entities. The integration of _json-schema_ 
+It is built with Django and comes with a simple API to create business entities. The integration of _json-schema_ 
 allows to define custom schema definitions, that will be used to validate the entities. A service that
-is "interested" in updates of a certain entity-type is also able to subscribe to _event-streams_, the default technology 
+needs updates of a certain entity-type is also able to subscribe to _event-streams_, the default technology 
 for that is Kafka.
 
-The philosophy behind Wayne is to avoid behavior that appears to a developers as "magic" and instead is build in very
+The philosophy behind Wayne is to avoid behavior that appears to a developers as "magic" and instead is built in very
 straightforward way, following Django best practices. It is also meant to be extendable and easy to adapt.
 
 **Further reading:**
 
 - [Core Concepts of Wayne](docs/core_concepts.md)
-
-- [How to integrate Wayne into your Architecture](docs/how_to_integrate_wayne.md)
-
 
 
 ## Quickstart

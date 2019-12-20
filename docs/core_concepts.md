@@ -35,7 +35,7 @@ repository or in a separate one. The version of a schema can be specified in its
 
 ## High-level Request Flow
 
-When a new entity is published through the Wayne API, the following chain of operations is executed:
+When a new entity is published to the Wayne API, a chain of operations is executed:
 
 1. The structure of an entity is validated against its schema-file in the given version.
 2. When the validation was successful, the entity is persisted in the database.
