@@ -44,17 +44,13 @@ _Note:_ Please make sure that port 8000 is not blocked by another service on you
 
 # How to setup wayne for your project?
 ### 1 Clone/Fork
-```
 You can Fork or Clone the project. We suggest you to Fork the project in order to have your separate repository 
 for further developing of Wayne and also to make some custom modifications(e.g. change the messaging provider), 
 but also to merge easier any new changes from the official repository.
-```
 
 ### 2 Add Business Entities Schemas Package
-```
 Next step is to define your schemas for your business entities and integrate them with Wayne. There are 2 choices, or having a different
 repository for your schemas and load them to wayne as a python package with pip, or adding them directly to the Wayne as a python package
-```
 
 ##### Business Entities Schemas package folders structure
 ```
@@ -79,7 +75,6 @@ https://github.com/project-a/wayne-json-schema
 
 
 ##### Different Github Repository
-```
 - Create a github repository
 - In requirements.txt file append your schemas repository url in order for pip to collect your package.
 (e.g.  git+https://github.com/project-a/wayne-json-schema.git)
@@ -88,12 +83,10 @@ https://github.com/project-a/wayne-json-schema
 (Keep in mind that in case of a private repository, it also needs to provide a private ssh key to the docker container and pull the project with ssh in order for Wayne
 to have access on the repository. For the developing process you can directly provide you personal private ssh key but for production you need to create a new one
 for Wayne)
-```
+
 ##### Add them directly to the Project
-```
 - Add/Create your package to the root folder of Wayne Project.
 - In setting.py file of Wayne project assign your package name to the 'SCHEMA_REGISTRY_PACKAGE' variable
-```
 
 # Run Wayne on Docker
 - Clone the project(from your forked or the official repository)
