@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AnonymousUser, Permission
 from rest_framework.request import Request
-from wayneapp.constants import ControllerConstants
+from wayneapp.constants import ControllerConstants, GroupConstants
+from django.contrib.auth.models import Permission, Group
+from django.contrib.contenttypes.models import ContentType
 
 
 class PermissionManager:
@@ -33,3 +35,13 @@ class PermissionManager:
 
     def _remove_underscores(self, string: str) -> str:
         return string.replace('_', '')
+
+    def create_group_and_permission_for_view_access(sender, **kwargs):
+        content_type, created = ContentType.objects.get_or_create(app_label='wayneapp', model='business_entity')
+        permission, created = Permission.objects.get_or_create(
+            name='Can view all business entities',
+            codename='view_business_entities',
+            content_type=content_type,
+        )
+        group, created = Group.objects.get_or_create(name=GroupConstants.BUSINESS_ENTITIES_VIEW_GROUP)
+        group.permissions.add(permission)
