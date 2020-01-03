@@ -41,8 +41,7 @@ class JsonSchemaValidator:
         return errors
 
     def _get_json_schema(self, business_entity, version) -> json:
-        json_string = self._schema_registry.find_schema(business_entity, version)
-        schema = json.loads(json_string)
+        schema = self._schema_registry.find_schema(business_entity, version)
 
         return schema
 

@@ -1,5 +1,6 @@
 import pkgutil
 from unittest import mock
+import json
 
 from django.test import TestCase
 from herbieapp.services import settings
@@ -18,9 +19,8 @@ class JsonSchemaValidatorTestCase(TestCase):
     @mock.patch.object(SchemaRegistry, 'get_all_versions')
     @mock.patch.object(SchemaRegistry, 'find_schema')
     def test_validate_success(self, mock_find_schema, mock_get_all_versions):
-        test_schema = self._load_test_schema(self._business_entity, self._version_1)
         mock_get_all_versions.return_value = [self._version_1]
-        mock_find_schema.return_value = test_schema.decode('utf-8')
+        mock_find_schema.return_value = self._load_test_schema(self._business_entity, self._version_1)
 
         json_data = {
             "testId": 12,
@@ -34,9 +34,8 @@ class JsonSchemaValidatorTestCase(TestCase):
     @mock.patch.object(SchemaRegistry, 'get_all_versions')
     @mock.patch.object(SchemaRegistry, 'find_schema')
     def test_validate_additional_property_error(self, mock_find_schema, mock_get_all_versions):
-        test_schema = self._load_test_schema(self._business_entity, self._version_1)
         mock_get_all_versions.return_value = [self._version_1]
-        mock_find_schema.return_value = test_schema.decode('utf-8')
+        mock_find_schema.return_value = self._load_test_schema(self._business_entity, self._version_1)
 
         json_data = {
             "testId": 12,
@@ -56,9 +55,8 @@ class JsonSchemaValidatorTestCase(TestCase):
     @mock.patch.object(SchemaRegistry, 'get_all_versions')
     @mock.patch.object(SchemaRegistry, 'find_schema')
     def test_validate_required_error(self, mock_find_schema, mock_get_all_versions):
-        test_schema = self._load_test_schema(self._business_entity, self._version_1)
         mock_get_all_versions.return_value = [self._version_1]
-        mock_find_schema.return_value = test_schema.decode('utf-8')
+        mock_find_schema.return_value = self._load_test_schema(self._business_entity, self._version_1)
 
         json_data = {
             "name": "testName",
@@ -77,9 +75,8 @@ class JsonSchemaValidatorTestCase(TestCase):
     @mock.patch.object(SchemaRegistry, 'find_schema')
     @mock.patch.object(SchemaRegistry, 'get_all_versions')
     def test_validate_type_error(self, mock_get_all_versions, mock_find_schema):
-        test_schema = self._load_test_schema(self._business_entity, self._version_1)
         mock_get_all_versions.return_value = [self._version_1]
-        mock_find_schema.return_value = test_schema.decode('utf-8')
+        mock_find_schema.return_value = self._load_test_schema(self._business_entity, self._version_1)
 
         json_data = {
             "testId": "wrongType",
@@ -108,5 +105,5 @@ class JsonSchemaValidatorTestCase(TestCase):
         self.assertEqual(message_response_expected, validation_messages)
 
     def _load_test_schema(self, business_entity, version):
-        return pkgutil.get_data('herbieapp.tests.test_schema',
-                                business_entity + '/' + business_entity + '_' + version +  '.json')
+        return json.loads(pkgutil.get_data('herbieapp.tests.test_schema',
+                                business_entity + '/' + business_entity + '_' + version +  '.json'))
